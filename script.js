@@ -163,13 +163,15 @@ if (sliderTrack) {
   sliderTrack.innerHTML = "";
 
   const images = [
-    "assets/cutm/mca01.jpg",
+    "assets/cutm/mca01.JPG",
     "assets/cutm/mca02.jpg",
-    "assets/cutm/mca03.jpg",
+    "assets/cutm/mca03.JPG",
     "assets/cutm/mca04.jpg",
     "assets/cutm/mca05.jpeg",
     "assets/cutm/mca06.jpeg",
   ];
+  
+
 
   // 🔥 duplicate for smooth infinite loop
   const allImages = [...images, ...images];
