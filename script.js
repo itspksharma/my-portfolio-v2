@@ -170,7 +170,7 @@ if (sliderTrack) {
     "assets/cutm/mca05.jpeg",
     "assets/cutm/mca06.jpeg",
   ];
-  
+
 
 
   // 🔥 duplicate for smooth infinite loop
@@ -310,6 +310,7 @@ portfolio.achievements?.forEach((a, index) => {
   }
 
   // ================= CONTACT FORM =================
+// ================= CONTACT FORM (FINAL CLEAN FIX) =================
 if (contact.form?.enabled && $("contact-form-box")) {
 
   const form = document.createElement("form");
@@ -317,41 +318,50 @@ if (contact.form?.enabled && $("contact-form-box")) {
   form.action = contact.form.action;
   form.className = "contact-form";
 
-  // fields
-  contact.form.fields.forEach(f => {
+  // 🔥 1. Hidden settings FIRST (very important)
+  const settings = contact.form.settings || {};
+
+  Object.keys(settings).forEach(key => {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = key;
+    input.value = settings[key];
+    form.appendChild(input);
+  });
+
+  // 🔥 2. Fields
+  contact.form.fields.forEach(field => {
     let input;
 
-    if (f.type === "textarea") {
+    if (field.type === "textarea") {
       input = document.createElement("textarea");
     } else {
       input = document.createElement("input");
-      input.type = f.type;
+      input.type = field.type;
     }
 
-    input.name = f.name;
-    input.placeholder = f.placeholder;
+    input.name = field.name;
+    input.placeholder = field.placeholder;
     input.required = true;
 
     form.appendChild(input);
   });
 
-  // hidden settings
-  Object.entries(contact.form.settings || {}).forEach(([k, v]) => {
-    const hidden = document.createElement("input");
-    hidden.type = "hidden";
-    hidden.name = k;
-    hidden.value = v;
-    form.appendChild(hidden);
-  });
-
-  // submit button
+  // 🔥 3. Button
   const btn = document.createElement("button");
   btn.type = "submit";
-  btn.innerText = "Send Message ";
+  btn.innerText = "Send Message";
   btn.className = "btn btn-primary mt-2";
 
   form.appendChild(btn);
 
+  // 🔥 4. UX improvement (optional but good)
+  form.addEventListener("submit", () => {
+    btn.innerText = "Sending...";
+    btn.disabled = true;
+  });
+
+  // append
   $("contact-form-box").appendChild(form);
 }
 

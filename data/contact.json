@@ -18,7 +18,6 @@
 
   "form": {
     "enabled": true,
-    "provider": "formsubmit",
     "action": "https://formsubmit.co/pawansharma.rkl@gmail.com",
 
     "settings": {
