@@ -1,0 +1,38 @@
+{
+  "title": "Get In Touch",
+  "subtitle": "Let's build something meaningful together 🚀",
+  "description": "I'm open to opportunities, collaborations, and freelance projects. Feel free to reach out.",
+
+  "email": "pawansharma.rkl@gmail.com",
+  "phone": "9658901536",
+  "location": "Rourkela, Odisha, India",
+
+  "map": {
+    "embed": "https://www.google.com/maps?q=Rourkela,India&output=embed"
+  },
+
+  "social": {
+    "github": "https://github.com/itspksharma",
+    "linkedin": "https://www.linkedin.com/in/itspksharma98/"
+  },
+
+  "form": {
+    "enabled": true,
+    "provider": "formsubmit",
+    "action": "https://formsubmit.co/pawansharma.rkl@gmail.com",
+
+    "settings": {
+      "_captcha": "false",
+      "_template": "table",
+      "_subject": "New Portfolio Message",
+      "_autoresponse": "Thanks! I will contact you soon.",
+      "_next": ""
+    },
+
+    "fields": [
+      { "type": "text", "name": "name", "placeholder": "Your Name" },
+      { "type": "email", "name": "email", "placeholder": "Your Email" },
+      { "type": "textarea", "name": "message", "placeholder": "Your Message" }
+    ]
+  }
+}

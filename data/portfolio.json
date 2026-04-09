@@ -1,0 +1,89 @@
+{
+
+  "projects_summary": "Here are some of my real-world projects that demonstrate my ability to build scalable, user-focused applications using modern technologies.",
+
+  "achievements_summary": "My journey from MCA to full-stack development, showcasing consistent growth, practical learning, and real-world problem solving.",
+
+  
+  "projects": [
+    {
+      "title": "Consultancy Admission Portal",
+      "desc": "Full-stack admission management system built with Next.js and Django REST. Supports role-based access (Admin, Student, Employee), application tracking, and payment verification for consultancy workflows.",
+      "image": "assets/projects/consultancy.jpeg",
+      "github": "https://github.com/itspksharma/consultancy-admission-portal",
+      "live": ""
+    },
+    {
+      "title": "Lifeline – Blood Donor System",
+      "desc": "Web-based blood donor management platform designed to connect donors and patients during emergencies. Includes donor search, filtering, and planned real-time request system.",
+      "image": "assets/projects/lifeline.png",
+      "github": "https://github.com/itspksharma/lifeline-blood-donor-system",
+      "live": ""
+    },
+    {
+      "title": "DevProfile Toolkit",
+      "desc": "Developer utility platform to analyze GitHub profiles and generate professional README files. Features GitHub analytics, language stats, and markdown-based README builder.",
+      "image": "assets/projects/devtoolkit.png",
+      "github": "https://github.com/itspksharma/devprofile-toolkit",
+      "live": "https://itspksharma.pythonanywhere.com/"
+    },
+    {
+      "title": "Just-Download – Utility Platform",
+      "desc": "Lightweight and fast web-based download utility focused on simplicity and performance. Provides direct installer downloads with minimal UI and efficient architecture.",
+      "image": "assets/projects/JustDownload.png",
+      "github": "https://github.com/itspksharma/just-download-website",
+      "live": "https://justdownload.askdevpk.me"
+    },
+    {
+      "title": "Taste Of India – Recipe Platform",
+      "desc": "Full-stack recipe sharing platform where users can explore, submit, and manage recipes. Includes authentication, admin approval system, and community-driven content.",
+      "image": "assets/projects/taste.png",
+      "github": "https://github.com/itspksharma/TasteOfIndia",
+      "live": ""
+    },
+    {
+      "title": "My-Dev-Space – Developer Portfolio",
+      "desc": "Modern developer portfolio built using Astro with custom domain, blog support, and scalable architecture. Designed for performance and personal branding.",
+      "image": "assets/projects/askdevpk.png",
+      "github": "https://github.com/itspksharma/my-dev-space",
+      "live": "https://www.askdevpk.me/"
+    },
+    {
+      "title": "Mood Tab – Chrome Extension",
+      "desc": "Mood-based animated Chrome new tab with background videos, quotes, weather, and search history. Built using JavaScript and browser APIs.",
+      "image": "assets/projects/Mood-Tab.png",
+      "github": "https://github.com/itspksharma/chrome-mood-tab-extension",
+      "live": ""
+    }
+    
+  ]
+  ,
+
+  
+  "achievements": [
+    
+    {
+      "title": "Exploring Multi-Backend Development",
+      "year": "2026",
+      "desc": "Currently working with both Node.js and Django, aiming to strengthen backend understanding and build more structured applications."
+    },
+    {
+      "title": "Hands-on with MERN & Practical Work",
+      "year": "2025",
+      "desc": "Worked on MERN stack projects and explored freelancing-style work using AI tools, focusing on solving real problems and improving development workflow."
+    },
+    {
+      "title": "Building Fundamentals Through Practice",
+      "year": "2024",
+      "desc": "Improved core development skills by working on projects, understanding APIs, frontend-backend integration, and basic deployment."
+    },
+    {
+      "title": "Transition After MCA into Development",
+      "year": "2023",
+      "desc": "Completed MCA and started focusing on web development, moving from academic knowledge to hands-on coding and small project building."
+    }
+    
+    
+  ]
+
+}

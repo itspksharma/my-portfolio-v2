@@ -1,0 +1,80 @@
+{
+  
+  "summary": "Quick learner and passionate Full Stack Developer with hands-on experience in the MERN stack and real-world business systems. I focus on building scalable and user-friendly applications, writing clean and maintainable code, and continuously improving through practical projects and modern technologies.",
+
+  "education_summary": "My academic journey helped me build a strong technical foundation along with real-world business understanding, which supported my transition into full-stack development. Here some glimpses from my MCA journey, including convocation moments and academic highlights.",
+
+  "certification_summary": "I have completed multiple certifications and internships to strengthen my technical skills, gain practical exposure, and stay aligned with modern technologies and industry practices.",
+  "education": [
+  {
+    "course": "Master of Computer Applications (MCA)",
+    "university": "Centurion University of Technology and Management",
+    "year": "2023",
+    "location": "Bhubaneswar, Odisha",
+    "icon": "ri-graduation-cap-line",
+    "color": "#3b82f6",
+    "note": "Focused on advanced web technologies, AI tools, and building full-stack production-level projects.",
+    "link": "https://verification.cutm.ac.in/verify/2023/5b343d86-ed11-4456-a165-b877c090ca30"
+  },
+  {
+    "course": "Bachelor of Science (B.Sc)",
+    "university": "Sambalpur University",
+    "year": "2020",
+    "location": "Rourkela, Odisha",
+    "icon": "ri-book-open-line",
+    "color": "#22c55e",
+    "note": "Worked with Tally ERP, GST, and explored Siebel CRM."
+  },
+  {
+    "course": "Higher Secondary Education (12th - Science)",
+    "university": "CHSE Odisha",
+    "year": "2015",
+    "location": "Rourkela, Odisha",
+    "icon": "ri-school-line",
+    "color": "#f59e0b"
+  },
+  {
+    "course": "Matriculation (10th)",
+    "university": "BSE Odisha",
+    "year": "2013",
+    "location": "Rourkela, Odisha",
+    "icon": "ri-building-line",
+    "color": "#ef4444"
+  }
+],
+
+  "certifications": [
+    {
+      "title": "Full Stack Internship (MERN)",
+      "desc": "Built real-world full-stack apps using React, Node.js, Express & MongoDB.",
+      "icon": "ri-code-s-slash-line",
+      "organization": "IPS Technologies",
+      "year": "2025",
+      "link": "https://drive.google.com/file/d/1AsAAoXeifp40vjmzK-SL-6o-wYBCOQv9/view"
+    },
+    {
+      "title": "Creative & Web Development Internship",
+      "desc": "Worked on UI/UX, modern layouts and responsive web design projects.",
+      "icon": "ri-layout-4-line",
+      "organization": "Alohomora Captures",
+      "year": "2024",
+      "link": "https://drive.google.com/file/d/1hcl8izbgeRBQJF2RhjJBvasrbp676wIy/view"
+    },
+    {
+      "title": "AWS Cloud Security Foundations",
+      "desc": "Learned cloud security, IAM, EC2, S3 and secure architecture basics.",
+      "icon": "ri-cloud-line",
+      "organization": "Amazon Web Services",
+      "year": "2023",
+      "link": "https://www.credly.com/badges/246d24a7-f704-4725-99be-0266cd71e61e/linked_in_profile"
+    },
+    {
+      "title": "Cybersecurity Essentials",
+      "desc": "Covered networking security, threats, and secure system practices.",
+      "icon": "ri-shield-check-line",
+      "organization": "Cisco Networking Academy",
+      "year": "2023",
+      "link": "https://www.credly.com/badges/1e60268d-5178-4449-92c3-9c26ae71b4d4/linked_in_profile"
+    }
+  ]
+}

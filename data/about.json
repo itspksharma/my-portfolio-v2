@@ -1,0 +1,31 @@
+{
+  "bio": "Full Stack Developer working with MERN stack and Django, focused on building scalable and user-friendly web applications through hands-on project development.",
+
+ "summary": [
+  "I’m Pawan — a Full Stack Developer currently working on building web applications using the MERN stack and Django. I handle both frontend and backend, including UI development, APIs, and data management.",
+
+  "Right now, I’m actively building projects to strengthen my practical skills. I have been working on full-stack applications and also exploring Django while developing real use-case projects like an admission consultancy portal.",
+
+  "While building these projects, I also use modern AI tools to improve productivity, understand concepts faster, and implement features more efficiently, while ensuring I understand the logic behind what I build.",
+
+  "Currently, I’m focused on improving my development skills, writing cleaner code, and preparing myself to contribute effectively in a professional development environment."
+],
+
+  "details": {
+    "City": "Rourkela, India",
+    "Email": "pawansharma.rkl@gmail.com",
+    "Phone": "9658901536"
+  },
+
+ "skills": [
+  { "name": "JavaScript", "icon": "ri-javascript-fill" },
+  { "name": "React.js", "icon": "ri-reactjs-line" },
+  { "name": "Node.js", "icon": "ri-server-line" }, 
+  { "name": "MongoDB", "icon": "ri-database-2-line" },
+
+  { "name": "REST APIs", "icon": "ri-links-line" }, 
+  { "name": "MySQL", "icon": "ri-database-line" },
+  { "name": "Git & GitHub", "icon": "ri-github-fill" },
+  { "name": "Python(Django)", "icon": "ri-code-s-slash-line" }
+]
+}
