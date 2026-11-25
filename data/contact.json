@@ -1,0 +1,36 @@
+{
+  "title": "Get In Touch",
+  "subtitle": "Let's build something meaningful together 🚀",
+  "description": "I'm open to opportunities, collaborations, and freelance projects. Feel free to reach out.",
+
+  "email": "",
+  "phone": "",
+  "location": "Rourkela, Odisha, India",
+
+  "map": {
+    "embed": "https://www.google.com/maps?q=Rourkela,India&output=embed"
+  },
+
+  "social": {
+    "github": "https://github.com/itspksharma",
+    "linkedin": "https://www.linkedin.com/in/itspksharma98/"
+  },
+
+  "form": {
+    "enabled": false,
+    "action": "",
+
+    "settings": {
+      "_captcha": "false",
+      "_template": "table",
+      "_subject": "New Portfolio Message",
+      "_autoresponse": "Thanks! I will contact you soon."
+    },
+
+    "fields": [
+      { "type": "text", "name": "name", "placeholder": "Your Name" },
+      { "type": "email", "name": "email", "placeholder": "Your Email" },
+      { "type": "textarea", "name": "message", "placeholder": "Your Message" }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Hi, I'm Pawan",
+  "roles": ["MERN Developer ", "Full Stack Developer ","django Developer", "Web Developer"],
+  "tagline": "Building Real-world Scalable Web Apps",
+
+  "background": {
+    "type": "image",
+    "value": "assets/hero-bg.jpeg"
+  },
+
+  "cta": [
+    {
+      "text": "View Portfolio",
+      "link": "#portfolio"
+    },
+    {
+      "text": "Contact Me",
+      "link": "#contact"
+    }
+  ]
+}
