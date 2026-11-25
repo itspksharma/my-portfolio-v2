@@ -1,46 +1,25 @@
 document.addEventListener("DOMContentLoaded", async () => {
-
   const $ = (id) => document.getElementById(id);
 
-  // ================= SAFE SET =================
   const setText = (id, value) => {
     const el = $(id);
-    if (el) el.innerText = value || "";
+    if (el) el.textContent = value || "";
   };
 
-  // ================= TYPE EFFECT =================
-  function typeEffect(element, words = [], speed = 100) {
-    if (!element || !words.length) return;
-
-    let i = 0, j = 0, isDeleting = false;
-
-    function type() {
-      let currentWord = words[i];
-
-      element.innerText = isDeleting
-        ? currentWord.substring(0, j--)
-        : currentWord.substring(0, j++);
-
-      if (!isDeleting && j === currentWord.length) {
-        isDeleting = true;
-        return setTimeout(type, 1000);
-      }
-
-      if (isDeleting && j === 0) {
-        isDeleting = false;
-        i = (i + 1) % words.length;
-      }
-
-      setTimeout(type, isDeleting ? speed / 2 : speed);
-    }
-
-    type();
+  let toastTimer = null;
+  function showToast(message) {
+    const toast = $("toast-pill");
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add("visible");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("visible"), 2600);
   }
 
-  // ================= LOAD JSON =================
   async function loadJSON(path) {
     try {
       const res = await fetch(path);
+      if (!res.ok) return {};
       return await res.json();
     } catch {
       return {};
@@ -56,407 +35,650 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadJSON("data/contact.json")
   ]);
 
-  // ================= AOS =================
-  if (window.AOS) AOS.init({ duration: 1000, once: true });
+  // ================= SITE & HEADER =================
+  if (site.title) document.title = site.title;
+  setText("nav-brand-name", `${(site.shortName || "pawan").toLowerCase()}.`);
+  setText("availability-text", site.availability || "Open to Work");
+  setText("footer-name", site.name || "Pawan Kumar Sharma");
 
-  // ================= SITE =================
-  setText("site-title", site.title);
-  setText("site-name", site.name);
-  setText("mobile-name", site.name);
-
-  if ($("profile-img")) $("profile-img").src = site.logo || "";
-
-  // ================= SIDEBAR SOCIAL =================
-if ($("sidebar-social")) {
-  $("sidebar-social").innerHTML = `
-    ${contact.social?.github ? `
-      <a href="${contact.social.github}" target="_blank" class="sidebar-icon">
-        <i class="ri-github-fill"></i>
-      </a>` : ""}
-
-    ${contact.social?.linkedin ? `
-      <a href="${contact.social.linkedin}" target="_blank" class="sidebar-icon">
-        <i class="ri-linkedin-fill"></i>
-      </a>` : ""}
-  `;
-}
-
-  
-
-  // ================= HOME =================
-  setText("hero-name", home.name);
-  typeEffect($("hero-role"), home.roles || []);
-  setText("hero-tagline", home.tagline);
-
-  if (home.background?.type === "image" && $("hero-bg")) {
-  $("hero-bg").style.backgroundImage = `
-    linear-gradient(
-      to right,
-      rgba(2,6,23,0.95) 20%,
-      rgba(2,6,23,0.85) 40%,
-      rgba(2,6,23,0.4) 65%,
-      rgba(2,6,23,0.05) 100%
-    ),
-    url(${home.background.value})
-  `;
-}
-
-  const cta = $("hero-cta");
-  if (cta) {
-    cta.innerHTML = "";
-    home.cta?.forEach(btn => {
-      const a = document.createElement("a");
-      a.href = btn.link;
-      a.innerText = btn.text;
-      cta.appendChild(a);
-    });
+  if ($("hero-portrait") && site.portrait) {
+    $("hero-portrait").src = site.portrait;
   }
 
-  // ================= ABOUT =================
-  setText("about-text", about.bio);
-
-  if ($("about-summary")) {
-    $("about-summary").innerHTML = "";
-    about.summary?.forEach(t => {
-      const p = document.createElement("p");
-      p.innerText = t;
-      $("about-summary").appendChild(p);
-    });
-  }
-
-  if ($("about-details")) {
-    $("about-details").innerHTML = "";
-    Object.entries(about.details || {}).forEach(([k, v]) => {
-      const d = document.createElement("div");
-      d.innerHTML = `<b>${k}:</b> ${v}`;
-      $("about-details").appendChild(d);
-    });
-  }
-
-  if ($("skills")) {
-  $("skills").innerHTML = "";
-
-  about.skills?.forEach(s => {
-    const div = document.createElement("div");
-    div.className = "skill-card";
-
-    div.innerHTML = `
-      <i class="${s.icon} skill-icon"></i>
-      <span>${s.name}</span>
-    `;
-
-    $("skills").appendChild(div);
-  });
-}
-
-  // ================= RESUME =================
-  // SUMMARY
-setText("summary", resume.summary);
-setText("education-summary", resume.education_summary);
-setText("certification-summary", resume.certification_summary);
-
-
-// ================= SLIDER (FINAL FIX) =================
-const sliderTrack = document.getElementById("slider-track");
-
-if (sliderTrack) {
-  sliderTrack.innerHTML = "";
-
-  const images = [
-    "assets/cutm/mca01.JPG",
-    "assets/cutm/mca02.jpg",
-    "assets/cutm/mca03.JPG",
-    "assets/cutm/mca04.jpg",
-    "assets/cutm/mca05.jpeg",
-    "assets/cutm/mca06.jpeg",
-  ];
-
-
-
-  // 🔥 duplicate for smooth infinite loop
-  const allImages = [...images, ...images];
-
-  allImages.forEach(img => {
-    const i = document.createElement("img");
-    i.src = img;
-    sliderTrack.appendChild(i);
-  });
-}
-
-// ================= EDUCATION =================
-const icons = ["ri-graduation-cap-line","ri-book-open-line","ri-school-line","ri-building-line"];
-
-const colors = ["#3b82f6","#22c55e","#f59e0b","#ef4444"];
-
-if ($("education")) {
-  $("education").innerHTML = "";
-
-  resume.education?.forEach((e, index) => {
-    const div = document.createElement("div");
-
-    div.className = "edu-card";
-
-    div.innerHTML = `
-      <div class="edu-icon" style="background:${colors[index]}">
-        <i class="${icons[index]}"></i>
-      </div>
-
-      <div class="edu-content">
-        <h4>${e.course}</h4>
-        <p>${e.university} (${e.year})</p>
-        <small>${e.location}</small>
-        ${e.note ? `<p class="edu-note">${e.note}</p>` : ""}
-        ${e.link ? `<a href="${e.link}" target="_blank">Verify</a>` : ""}
-      </div>
-    `;
-
-    $("education").appendChild(div);
-  });
-}
-
-  if ($("certifications")) {
-    $("certifications").innerHTML = "";
-    resume.certifications?.forEach(c => {
-      const div = document.createElement("div");
-      div.className = "cert-card";
-
-      div.innerHTML = `
-        <div class="cert-icon"><i class="${c.icon}"></i></div>
-        <div class="cert-content">
-          <h4>${c.title}</h4>
-          <p>${c.desc || ""}</p>
-          <small>${c.organization} (${c.year})</small><br>
-          ${c.link ? `<a class="cert-link" href="${c.link}" target="_blank">View</a>` : ""}
-        </div>
-      `;
-
-      $("certifications").appendChild(div);
-    });
-  }
-
-    // ================= PROJECT =================
-    // ================= PORTFOLIO SUMMARY =================
-setText("projects-summary", portfolio.projects_summary);
-setText("achievements-summary", portfolio.achievements_summary);
-portfolio.projects?.forEach(p => {
-  const div = document.createElement("div");
-
-  div.className = "col-md-6 col-lg-4 mb-4";
-
-  div.innerHTML = `
-    <div class="card h-100 shadow-sm" data-aos="zoom-in">
-
-      <img src="${p.image}" class="card-img-top" alt="${p.title}" />
-
-      <div class="card-body d-flex flex-column">
-        <h5 class="card-title">${p.title}</h5>
-        <p class="card-text">${p.desc}</p>
-
-        <div class="mt-auto">
-          ${p.github ? `<a href="${p.github}" target="_blank" class="btn btn-dark btn-sm me-2">GitHub</a>` : ""}
-          ${p.live ? `<a href="${p.live}" target="_blank" class="btn btn-primary btn-sm">Live</a>` : ""}
-        </div>
-      </div>
-
-    </div>
-  `;
-
-  document.getElementById("projects").appendChild(div);
-});
-
-  // ================= ACHIEVEMENTS =================
-portfolio.achievements?.forEach((a, index) => {
-  const div = document.createElement("div");
-
-  div.className = "timeline-item";
-
-  div.innerHTML = `
-    <div class="timeline-dot"></div>
-
-    <div class="timeline-content" data-aos="fade-up" data-aos-delay="${index * 150}">
-      <span class="timeline-year">${a.year}</span>
-      <h5>${a.title}</h5>
-      <p>${a.desc}</p>
-    </div>
-  `;
-
-  document.getElementById("achievements").appendChild(div);
-});
-
-  // ================= CONTACT =================
-  setText("contact-title", contact.title);
-  setText("contact-subtitle", contact.subtitle);
-  setText("contact-desc", contact.description);
-
-  if ($("contact-info")) {
-    $("contact-info").innerHTML = `
-      <p>📧 ${contact.email || ""}</p>
-      <p>📞 ${contact.phone || ""}</p>
-      <p>📍 ${contact.location || ""}</p>
-
-      <div class="social-links mt-3">
-      ${contact.social?.github ? `
-        <a href="${contact.social.github}" target="_blank" class="social-btn">
-          <i class="ri-github-fill"></i>
-        </a>` : ""}
-
-      ${contact.social?.linkedin ? `
-        <a href="${contact.social.linkedin}" target="_blank" class="social-btn">
-          <i class="ri-linkedin-fill"></i>
-        </a>` : ""}
-    </div>
-
-    `;
-  }
-
-  // ================= CONTACT FORM =================
-// ================= CONTACT FORM (FINAL CLEAN FIX) =================
-if (contact.form?.enabled && $("contact-form-box")) {
-
-  const form = document.createElement("form");
-  form.method = "POST";
-  form.action = contact.form.action;
-  form.className = "contact-form";
-
-  // 🔥 1. Hidden settings FIRST (very important)
-  const settings = contact.form.settings || {};
-
-  Object.keys(settings).forEach(key => {
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = key;
-    input.value = settings[key];
-    form.appendChild(input);
-  });
-
-  // 🔥 2. Fields
-  contact.form.fields.forEach(field => {
-    let input;
-
-    if (field.type === "textarea") {
-      input = document.createElement("textarea");
+  // Resume PDF link or graceful fallback until PDF is uploaded
+  const resumeBtn = $("resume-btn");
+  if (resumeBtn) {
+    if (site.resumePdf) {
+      resumeBtn.href = site.resumePdf;
+      resumeBtn.setAttribute("target", "_blank");
+      resumeBtn.setAttribute("rel", "noopener noreferrer");
+      setText("resume-btn-label", "Download CV ↗");
     } else {
-      input = document.createElement("input");
-      input.type = field.type;
+      resumeBtn.href = "#experience";
+      setText("resume-btn-label", "Resume PDF (Soon)");
+      resumeBtn.addEventListener("click", () => {
+        showToast("Resume PDF will be linked shortly — view experience below.");
+      });
+    }
+  }
+
+  // ================= 01 HERO =================
+  setText("hero-eyebrow", home.eyebrow || "Hi, I'm");
+  setText("hero-display", home.displayName || "Pawan");
+  setText("hero-role", home.role || "Full Stack Developer — MERN & Django");
+  setText("hero-tagline", home.tagline || "");
+
+  if (home.stickyNote) {
+    setText("sticky-index", home.stickyNote.index || "01 /");
+    const stickyEl = $("sticky-text");
+    if (stickyEl) {
+      stickyEl.innerHTML = "";
+      String(home.stickyNote.text || "")
+        .split("\n")
+        .forEach((line, idx, arr) => {
+          stickyEl.appendChild(document.createTextNode(line));
+          if (idx < arr.length - 1) stickyEl.appendChild(document.createElement("br"));
+        });
+    }
+  }
+
+  const ctaBox = $("hero-cta");
+  if (ctaBox && Array.isArray(home.cta)) {
+    ctaBox.innerHTML = "";
+    home.cta.forEach((btn, idx) => {
+      const a = document.createElement("a");
+      a.href = btn.link || "#";
+      a.className = idx === 0 ? "btn-cream" : "btn-ghost-light";
+      a.textContent = btn.text || "";
+      ctaBox.appendChild(a);
+    });
+  }
+
+  // Subtle interactive tilt on portrait stage (desktop)
+  const portraitStage = $("portrait-stage");
+  if (portraitStage && window.matchMedia("(pointer: fine)").matches) {
+    portraitStage.addEventListener("mousemove", (e) => {
+      const rect = portraitStage.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      portraitStage.style.transform = `perspective(700px) rotateY(${(x * 7).toFixed(2)}deg) rotateX(${(-y * 7).toFixed(2)}deg)`;
+    });
+    portraitStage.addEventListener("mouseleave", () => {
+      portraitStage.style.transform = "";
+    });
+  }
+
+  // ================= 02 SELECTED WORK & MODAL =================
+  setText("projects-summary", portfolio.projects_summary || "");
+  const allProjects = Array.isArray(portfolio.projects) ? portfolio.projects : [];
+  const projectsGrid = $("projects");
+  const wideSlot = $("featured-wide-slot");
+
+  function openProjectModal(project) {
+    const modal = $("project-modal");
+    if (!modal) return;
+    $("modal-img").src = project.image || "";
+    $("modal-img").alt = project.title || "";
+    setText("modal-title", project.title || "");
+    setText("modal-desc", project.desc || "");
+
+    const tagsBox = $("modal-tags");
+    tagsBox.innerHTML = "";
+    (project.tags || []).forEach((tag) => {
+      const span = document.createElement("span");
+      span.className = "stack-tag";
+      span.textContent = tag;
+      tagsBox.appendChild(span);
+    });
+
+    const actionsBox = $("modal-actions");
+    actionsBox.innerHTML = "";
+    if (project.github) {
+      const gh = document.createElement("a");
+      gh.href = project.github;
+      gh.target = "_blank";
+      gh.rel = "noopener noreferrer";
+      gh.className = "btn-card-primary";
+      gh.innerHTML = `<i class="ri-github-fill"></i> View Code`;
+      actionsBox.appendChild(gh);
+    }
+    if (project.live) {
+      const lv = document.createElement("a");
+      lv.href = project.live;
+      lv.target = "_blank";
+      lv.rel = "noopener noreferrer";
+      lv.className = "btn-card-secondary";
+      lv.innerHTML = `<i class="ri-external-link-line"></i> Live Demo`;
+      actionsBox.appendChild(lv);
     }
 
-    input.name = field.name;
-    input.placeholder = field.placeholder;
-    input.required = true;
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+  }
 
-    form.appendChild(input);
+  function closeProjectModal() {
+    const modal = $("project-modal");
+    if (!modal || modal.hidden) return;
+    modal.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  if ($("modal-close")) {
+    $("modal-close").addEventListener("click", closeProjectModal);
+  }
+  if ($("project-modal")) {
+    $("project-modal").addEventListener("click", (e) => {
+      if (e.target.id === "project-modal") closeProjectModal();
+    });
+  }
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeProjectModal();
   });
 
-  // 🔥 3. Button
-  const btn = document.createElement("button");
-  btn.type = "submit";
-  btn.innerText = "Send Message";
-  btn.className = "btn btn-primary mt-2";
+  function createProjectCard(project) {
+    const card = document.createElement("article");
+    card.className = "project-card";
 
-  form.appendChild(btn);
+    const tape = document.createElement("span");
+    tape.className = "card-tape";
+    tape.setAttribute("aria-hidden", "true");
+    card.appendChild(tape);
 
-  // 🔥 4. UX improvement (optional but good)
-  form.addEventListener("submit", () => {
-    btn.innerText = "Sending...";
-    btn.disabled = true;
+    const thumbBtn = document.createElement("button");
+    thumbBtn.type = "button";
+    thumbBtn.className = "project-thumb-btn";
+    thumbBtn.setAttribute("aria-label", `Inspect ${project.title}`);
+    const img = document.createElement("img");
+    img.src = project.image || "";
+    img.alt = project.title || "Project preview";
+    img.loading = "lazy";
+    thumbBtn.appendChild(img);
+    thumbBtn.addEventListener("click", () => openProjectModal(project));
+    card.appendChild(thumbBtn);
+
+    const title = document.createElement("h3");
+    title.className = "project-title";
+    title.textContent = project.title || "";
+    card.appendChild(title);
+
+    const desc = document.createElement("p");
+    desc.className = "project-desc";
+    desc.textContent = project.desc || "";
+    card.appendChild(desc);
+
+    const tagRow = document.createElement("div");
+    tagRow.className = "tag-row";
+    (project.tags || []).forEach((t) => {
+      const span = document.createElement("span");
+      span.className = "stack-tag";
+      span.textContent = t;
+      tagRow.appendChild(span);
+    });
+    card.appendChild(tagRow);
+
+    const actions = document.createElement("div");
+    actions.className = "project-actions";
+    if (project.github) {
+      const codeLink = document.createElement("a");
+      codeLink.href = project.github;
+      codeLink.target = "_blank";
+      codeLink.rel = "noopener noreferrer";
+      codeLink.className = "btn-card-primary";
+      codeLink.innerHTML = `<i class="ri-github-fill"></i> Code`;
+      actions.appendChild(codeLink);
+    }
+
+    if (project.live) {
+      const liveLink = document.createElement("a");
+      liveLink.href = project.live;
+      liveLink.target = "_blank";
+      liveLink.rel = "noopener noreferrer";
+      liveLink.className = "btn-card-secondary";
+      liveLink.innerHTML = `Live <i class="ri-arrow-right-up-line"></i>`;
+      actions.appendChild(liveLink);
+    } else {
+      const detailBtn = document.createElement("button");
+      detailBtn.type = "button";
+      detailBtn.className = "btn-card-secondary";
+      detailBtn.innerHTML = `Details <i class="ri-eye-line"></i>`;
+      detailBtn.addEventListener("click", () => openProjectModal(project));
+      actions.appendChild(detailBtn);
+    }
+    card.appendChild(actions);
+
+    return card;
+  }
+
+  function renderProjects(filter = "All") {
+    if (!projectsGrid || !wideSlot) return;
+    projectsGrid.innerHTML = "";
+    wideSlot.innerHTML = "";
+
+    const filtered = filter === "All"
+      ? allProjects
+      : allProjects.filter((p) => p.category === filter);
+
+    const gridItems = filter === "All"
+      ? filtered.filter((p) => !p.featuredWide)
+      : filtered;
+
+    const wideItems = filter === "All"
+      ? filtered.filter((p) => p.featuredWide)
+      : [];
+
+    gridItems.forEach((p) => projectsGrid.appendChild(createProjectCard(p)));
+
+    wideItems.forEach((p) => {
+      const wrap = document.createElement("article");
+      wrap.className = "featured-wide-card";
+
+      const thumbBtn = document.createElement("button");
+      thumbBtn.type = "button";
+      thumbBtn.className = "project-thumb-btn";
+      thumbBtn.setAttribute("aria-label", `Inspect ${p.title}`);
+      const img = document.createElement("img");
+      img.src = p.image || "";
+      img.alt = p.title || "";
+      img.loading = "lazy";
+      thumbBtn.appendChild(img);
+      thumbBtn.addEventListener("click", () => openProjectModal(p));
+
+      const meta = document.createElement("div");
+      meta.className = "featured-wide-meta";
+
+      const pill = document.createElement("span");
+      pill.className = "spotlight-pill";
+      pill.textContent = "Browser Extension Spotlight";
+
+      const title = document.createElement("h3");
+      title.className = "project-title";
+      title.textContent = p.title || "";
+
+      const desc = document.createElement("p");
+      desc.className = "project-desc";
+      desc.textContent = p.desc || "";
+
+      const tagRow = document.createElement("div");
+      tagRow.className = "tag-row";
+      (p.tags || []).forEach((t) => {
+        const span = document.createElement("span");
+        span.className = "stack-tag";
+        span.textContent = t;
+        tagRow.appendChild(span);
+      });
+
+      const actRow = document.createElement("div");
+      actRow.className = "featured-wide-actions";
+      if (p.github) {
+        const code = document.createElement("a");
+        code.href = p.github;
+        code.target = "_blank";
+        code.rel = "noopener noreferrer";
+        code.className = "btn-card-primary";
+        code.innerHTML = `<i class="ri-github-fill"></i> Code`;
+        actRow.appendChild(code);
+      }
+      const det = document.createElement("button");
+      det.type = "button";
+      det.className = "btn-card-secondary";
+      det.innerHTML = `Preview <i class="ri-eye-line"></i>`;
+      det.addEventListener("click", () => openProjectModal(p));
+      actRow.appendChild(det);
+
+      meta.append(pill, title, desc, tagRow, actRow);
+      wrap.append(thumbBtn, meta);
+      wideSlot.appendChild(wrap);
+    });
+  }
+
+  renderProjects("All");
+
+  document.querySelectorAll(".filter-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderProjects(btn.dataset.filter || "All");
+    });
   });
 
-  // append
-  $("contact-form-box").appendChild(form);
-}
+  // ================= 03 EXPERIENCE & TECH STACK =================
+  const expList = $("experience-list");
+  if (expList && Array.isArray(resume.experience)) {
+    expList.innerHTML = "";
+    resume.experience.forEach((exp) => {
+      const card = document.createElement("article");
+      card.className = "exp-card";
 
-  if ($("map-frame")) $("map-frame").src = contact.map?.embed || "";
+      card.innerHTML = `
+        <span class="ribbon-bookmark" aria-hidden="true"></span>
+        <div class="exp-top">
+          <h4 class="exp-company"></h4>
+          <span class="exp-year"></span>
+        </div>
+        <p class="exp-role"></p>
+        <p class="exp-desc"></p>
+      `;
+      card.querySelector(".exp-company").textContent = exp.company || "";
+      card.querySelector(".exp-year").textContent = exp.year || "";
+      card.querySelector(".exp-role").textContent = exp.role || "";
+      card.querySelector(".exp-desc").textContent = exp.desc || "";
 
-  // ================= WHATSAPP AUTO GREETING =================
-if ($("whatsappBtn")) {
+      if (exp.link) {
+        const link = document.createElement("a");
+        link.href = exp.link;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.className = "pill-link";
+        link.innerHTML = `Certificate <i class="ri-arrow-right-up-line"></i>`;
+        card.appendChild(link);
+      }
 
-  const message = `Hello 👋
+      expList.appendChild(card);
+    });
+  }
 
-Thank you for reaching out!
+  const skillsGrid = $("skills");
+  if (skillsGrid && Array.isArray(about.skills)) {
+    skillsGrid.innerHTML = "";
+    about.skills.forEach((s) => {
+      const tile = document.createElement("div");
+      tile.className = "skill-tile";
+      tile.innerHTML = `
+        <i class="${s.icon || "ri-code-s-slash-line"}" aria-hidden="true"></i>
+        <span class="skill-name"></span>
+        <span class="skill-group"></span>
+      `;
+      tile.querySelector(".skill-name").textContent = s.name || "";
+      tile.querySelector(".skill-group").textContent = s.group || "";
+      skillsGrid.appendChild(tile);
+    });
+  }
 
-I'm Pawan, a Full Stack Developer.  
-Feel free to share your requirement or opportunity — I'll be happy to connect with you 🚀`;
+  // ================= 04 ABOUT, EDUCATION & CERTIFICATIONS =================
+  setText("about-text", about.bio || "");
+  setText("about-location", about.location ? `📍 ${about.location}` : "");
 
-  const encodedMsg = encodeURIComponent(message);
+  const highlightsBox = $("about-highlights");
+  if (highlightsBox && Array.isArray(about.highlights)) {
+    highlightsBox.innerHTML = "";
+    about.highlights.forEach((h) => {
+      const pill = document.createElement("span");
+      pill.className = "about-pill";
+      pill.textContent = h;
+      highlightsBox.appendChild(pill);
+    });
+  }
 
-  $("whatsappBtn").href = `https://wa.me/91${contact.phone}?text=${encodedMsg}`;
-}
+  const eduBox = $("education");
+  if (eduBox && Array.isArray(resume.education)) {
+    eduBox.innerHTML = "";
+    resume.education.forEach((e) => {
+      const row = document.createElement("div");
+      row.className = "cred-row";
 
-  // ================= NAV + SCROLL =================
-  const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll(".nav-link");
-  const topBtn = $("topBtn");
+      const left = document.createElement("div");
+      left.innerHTML = `
+        <div class="cred-title"></div>
+        <div class="cred-meta"></div>
+        ${e.note ? `<div class="cred-note"></div>` : ""}
+      `;
+      left.querySelector(".cred-title").textContent = `${e.course} (${e.year})`;
+      left.querySelector(".cred-meta").textContent = `${e.university} • ${e.location}`;
+      if (e.note) left.querySelector(".cred-note").textContent = e.note;
+      row.appendChild(left);
+
+      if (e.link) {
+        const a = document.createElement("a");
+        a.href = e.link;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.className = "pill-link";
+        a.innerHTML = `Verify <i class="ri-arrow-right-up-line"></i>`;
+        row.appendChild(a);
+      }
+
+      eduBox.appendChild(row);
+    });
+  }
+
+  const certBox = $("certifications");
+  if (certBox && Array.isArray(resume.certifications)) {
+    certBox.innerHTML = "";
+    resume.certifications.forEach((c) => {
+      const row = document.createElement("div");
+      row.className = "cred-row";
+
+      const left = document.createElement("div");
+      left.innerHTML = `
+        <div class="cred-title"></div>
+        <div class="cred-meta"></div>
+      `;
+      left.querySelector(".cred-title").textContent = c.title || "";
+      left.querySelector(".cred-meta").textContent = `${c.organization} • ${c.year}`;
+      row.appendChild(left);
+
+      if (c.link) {
+        const a = document.createElement("a");
+        a.href = c.link;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.className = "pill-link";
+        a.innerHTML = `View <i class="ri-arrow-right-up-line"></i>`;
+        row.appendChild(a);
+      }
+
+      certBox.appendChild(row);
+    });
+  }
+
+  const sliderTrack = $("slider-track");
+  if (sliderTrack && Array.isArray(resume.gallery) && resume.gallery.length) {
+    sliderTrack.innerHTML = "";
+    const loopImages = [...resume.gallery, ...resume.gallery];
+    loopImages.forEach((src, i) => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = `MCA convocation highlight ${(i % resume.gallery.length) + 1}`;
+      img.loading = "lazy";
+      sliderTrack.appendChild(img);
+    });
+  }
+
+  // ================= 05 CONTACT & AJAX FORM =================
+  setText("contact-headline", contact.headline || "Got a good idea or role?");
+  setText("contact-desc", contact.description || "");
+
+  const contactInfo = $("contact-info");
+  if (contactInfo) {
+    contactInfo.innerHTML = "";
+
+    if (contact.email) {
+      const emailRow = document.createElement("div");
+      emailRow.className = "contact-line";
+      emailRow.innerHTML = `
+        <i class="ri-mail-line" aria-hidden="true"></i>
+        <a href="mailto:${contact.email}">${contact.email}</a>
+        <button type="button" class="copy-email-btn" id="copy-email-btn">Copy</button>
+      `;
+      contactInfo.appendChild(emailRow);
+
+      emailRow.querySelector("#copy-email-btn").addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(contact.email);
+          showToast("Email copied to clipboard!");
+        } catch {
+          showToast(contact.email);
+        }
+      });
+    }
+
+    if (contact.phone) {
+      const phoneRow = document.createElement("div");
+      phoneRow.className = "contact-line";
+      const cleanTel = (contact.phoneRaw || contact.phone).replace(/\s+/g, "");
+      phoneRow.innerHTML = `
+        <i class="ri-phone-line" aria-hidden="true"></i>
+        <a href="tel:+${cleanTel.replace(/^\+/, "")}">${contact.phone}</a>
+      `;
+      contactInfo.appendChild(phoneRow);
+    }
+
+    if (contact.location) {
+      const locRow = document.createElement("div");
+      locRow.className = "contact-line";
+      locRow.innerHTML = `
+        <i class="ri-map-pin-line" aria-hidden="true"></i>
+        <span></span>
+      `;
+      locRow.querySelector("span").textContent = contact.location;
+      contactInfo.appendChild(locRow);
+    }
+  }
+
+  const socialsBox = $("contact-socials");
+  if (socialsBox) {
+    socialsBox.innerHTML = "";
+    if (contact.social?.github) {
+      const gh = document.createElement("a");
+      gh.href = contact.social.github;
+      gh.target = "_blank";
+      gh.rel = "noopener noreferrer";
+      gh.className = "social-pill";
+      gh.innerHTML = `<i class="ri-github-fill"></i> GitHub`;
+      socialsBox.appendChild(gh);
+    }
+    if (contact.social?.linkedin) {
+      const li = document.createElement("a");
+      li.href = contact.social.linkedin;
+      li.target = "_blank";
+      li.rel = "noopener noreferrer";
+      li.className = "social-pill";
+      li.innerHTML = `<i class="ri-linkedin-fill"></i> LinkedIn`;
+      socialsBox.appendChild(li);
+    }
+    if (contact.phoneRaw) {
+      const msg = encodeURIComponent(
+        "Hi Pawan, I checked out your portfolio and would love to connect regarding an opportunity."
+      );
+      const wa = document.createElement("a");
+      wa.href = `https://wa.me/${contact.phoneRaw}?text=${msg}`;
+      wa.target = "_blank";
+      wa.rel = "noopener noreferrer";
+      wa.className = "social-pill";
+      wa.innerHTML = `<i class="ri-whatsapp-line"></i> WhatsApp`;
+      socialsBox.appendChild(wa);
+    }
+  }
+
+  // AJAX FormSubmit with loading -> success feedback
+  const formBox = $("contact-form-box");
+  const feedbackEl = $("form-feedback");
+  if (contact.form?.enabled && formBox) {
+    const form = document.createElement("form");
+    form.className = "contact-form";
+    form.method = "POST";
+    form.action = contact.form.action;
+
+    const settings = contact.form.settings || {};
+    Object.entries(settings).forEach(([key, val]) => {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = key;
+      hidden.value = val;
+      form.appendChild(hidden);
+    });
+
+    (contact.form.fields || []).forEach((field) => {
+      const el = field.type === "textarea"
+        ? document.createElement("textarea")
+        : document.createElement("input");
+      if (field.type !== "textarea") el.type = field.type || "text";
+      el.name = field.name || "";
+      el.placeholder = field.placeholder || "";
+      el.required = true;
+      form.appendChild(el);
+    });
+
+    const submitBtn = document.createElement("button");
+    submitBtn.type = "submit";
+    submitBtn.className = "submit-pill-btn";
+    submitBtn.textContent = "Send Message";
+    form.appendChild(submitBtn);
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (feedbackEl) {
+        feedbackEl.textContent = "";
+        feedbackEl.className = "form-feedback";
+      }
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending...";
+
+      try {
+        const res = await fetch(contact.form.action, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new FormData(form)
+        });
+        if (!res.ok) throw new Error("Request failed");
+        form.reset();
+        if (feedbackEl) {
+          feedbackEl.textContent = "Message sent! Thanks for reaching out — I'll reply soon.";
+          feedbackEl.classList.add("success");
+        }
+        showToast("Message sent successfully!");
+      } catch {
+        if (feedbackEl) {
+          feedbackEl.textContent = "Could not send via form right now — please email or WhatsApp directly.";
+          feedbackEl.classList.add("error");
+        }
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send Message";
+      }
+    });
+
+    formBox.appendChild(form);
+  }
+
+  // ================= SCROLL SPY, BACK TO TOP & MOBILE NAV =================
+  const sections = document.querySelectorAll("main section[id]");
+  const navLinks = document.querySelectorAll(".nav-pill-link");
 
   window.addEventListener("scroll", () => {
-
-    let current = "";
-
-    sections.forEach(sec => {
+    let activeId = "";
+    sections.forEach((sec) => {
       const rect = sec.getBoundingClientRect();
-      if (rect.top <= 150 && rect.bottom >= 150) {
-        current = sec.id;
+      if (rect.top <= 160 && rect.bottom >= 160) {
+        activeId = sec.id;
       }
     });
-
-    // bottom fix (contact)
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
-      current = "contact";
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 40) {
+      activeId = "contact";
     }
-
-    navLinks.forEach(link => {
-      link.classList.remove("active");
-      if (link.getAttribute("href") === "#" + current) {
-        link.classList.add("active");
-      }
+    navLinks.forEach((link) => {
+      link.classList.toggle("active", link.getAttribute("href") === `#${activeId}`);
     });
+  }, { passive: true });
 
-    // scroll top button
-    if (topBtn) {
-      topBtn.style.display = window.scrollY > 300 ? "block" : "none";
-    }
-  });
-
-  // ================= SCROLL TOP =================
-  if (topBtn) {
-    topBtn.onclick = () => {
+  if ($("topBtn")) {
+    $("topBtn").addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
-    };
+    });
   }
 
-  const profileImg = document.getElementById("profile-img");
-
-if (profileImg) {
-  profileImg.addEventListener("click", () => {
-
-    // 🔥 SWING ANIMATION
-    profileImg.classList.add("swing");
-    setTimeout(() => {
-      profileImg.classList.remove("swing");
-    }, 600);
-
-  });
-}
-
-// ================= MOBILE NAV =================
-const toggleBtn = document.getElementById("menu-toggle");
-const mobileMenu = document.getElementById("mobile-menu");
-
-// mobile profile image
-if ($("mobile-profile-img")) {
-  $("mobile-profile-img").src = site.logo || "";
-}
-
-if (toggleBtn && mobileMenu) {
-  toggleBtn.addEventListener("click", () => {
-    mobileMenu.classList.toggle("show");
-  });
-}
-
-// close menu after click
-document.querySelectorAll("#mobile-menu a").forEach(link => {
-  link.addEventListener("click", () => {
-    mobileMenu.classList.remove("show");
-  });
-});
-
+  const menuToggle = $("menu-toggle");
+  const mobileMenu = $("mobile-menu");
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = mobileMenu.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
 });

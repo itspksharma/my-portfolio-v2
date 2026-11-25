@@ -2,187 +2,248 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title id="site-title">Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="site-title">Pawan Kumar Sharma | Full Stack Developer</title>
+  <meta name="description" content="Portfolio of Pawan Kumar Sharma — Full Stack Developer specializing in MERN stack, Next.js, and Django REST." />
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fonts: Instrument Serif + Plus Jakarta Sans + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- AOS -->
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
+  <!-- V3 Stylesheet -->
   <link rel="stylesheet" href="style.css" />
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
+<body>
 
-<body class="bg-gray-50 text-gray-900 font-sans scroll-smooth">
+  <!-- FLOATING TOP NAVIGATION -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="#home" class="brand-pill" aria-label="Pawan Kumar Sharma Home">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span id="nav-brand-name">pawan.</span>
+      </a>
 
-<!-- SIDEBAR -->
-<aside id="sidebar">
-  <div class="text-center sidebar-profile">
-  <div class="profile-wrapper">
-    <img id="profile-img" />
-  </div>
+      <nav class="glass-nav" id="desktop-nav" aria-label="Primary Navigation">
+        <a href="#work" class="nav-pill-link">Work</a>
+        <a href="#experience" class="nav-pill-link">Experience</a>
+        <a href="#credentials" class="nav-pill-link">About</a>
+        <a href="#contact" class="nav-pill-link">Contact</a>
+      </nav>
 
-  <h2 id="site-name" class="sidebar-name"></h2>
-  <p class="sidebar-role">Full Stack Developer</p>
-
-  <div id="sidebar-social" class="sidebar-social"></div>
-</div>
-
-  <nav id="nav-links">
-    <a href="#home" class="nav-link">Home</a>
-    <a href="#about" class="nav-link">About</a>
-    <a href="#resume" class="nav-link">Resume</a>
-    <a href="#portfolio" class="nav-link">Portfolio</a>
-    <a href="#contact" class="nav-link">Contact</a>
-  </nav>
-</aside>
-
-<!-- MOBILE NAVBAR -->
-<div id="mobile-nav">
-
-  <div class="mobile-top">
-
-    <div class="mobile-profile">
-      <img id="mobile-profile-img" />
-      <h4 id="mobile-name"></h4>
-    </div>
-
-    <button id="menu-toggle">
-      <i class="ri-menu-line"></i>
-    </button>
-
-  </div>
-
-  <div id="mobile-menu">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#resume">Resume</a>
-    <a href="#portfolio">Portfolio</a>
-    <a href="#contact">Contact</a>
-  </div>
-
-</div>
-
-
-<!-- MAIN -->
-<main id="main">
-
-<!-- HOME -->
-<section id="home">
-  <div id="hero-bg"></div>
-  <div id="hero-overlay"></div>
-
-  <div class="hero-content text-center">
-    <h1 id="hero-name" class="hero-name"></h1>
-    <p id="hero-role" class="hero-role"></p>
-    <p id="hero-tagline" class="hero-tagline"></p>
-    <div id="hero-cta"></div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about" class="container" data-aos="fade-up">
-  <h2>About</h2>
-  <p id="about-text"></p>
-
-  <div class="row align-items-center">
-    <div class="col-md-4">
-      <img id="about-img" src="assets/profile.jpeg" class="img-fluid rounded"/>
-    </div>
-    <div class="col-md-8">
-      <div id="about-summary"></div>
-      <div id="about-details"></div>
-    </div>
-  </div>
-  <h3>Tech Skills</h3>
-  <div id="skills" class="mt-4"></div>
-</section>
-
-<!-- RESUME -->
-<section id="resume" class="container" data-aos="fade-up">
-
-  <h2>Resume</h2>
-
-  <!-- SUMMARY -->
-  <p id="summary"></p>
-
-  <!-- EDUCATION SUMMARY + SLIDER -->
-  <div class="row align-items-center mt-4">
-
-    <!-- LEFT TEXT -->
-    <div class="col-md-6">
-      <p id="education-summary"></p>
-    </div>
-
-    <!-- RIGHT SLIDER -->
-    <div class="col-md-6">
-      <div class="edu-slider">
-        <div class="slider-track" id="slider-track"></div>
+      <div class="header-actions">
+        <a href="#contact" class="availability-chip" id="availability-chip">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          <span id="availability-text">Open to Work</span>
+        </a>
+        <button class="mobile-menu-btn" id="menu-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false">
+          <i class="ri-menu-3-line"></i>
+        </button>
       </div>
     </div>
 
-  </div>
+    <nav class="mobile-drawer" id="mobile-menu" aria-label="Mobile Navigation">
+      <a href="#home">Home</a>
+      <a href="#work">Selected Work</a>
+      <a href="#experience">Experience &amp; Stack</a>
+      <a href="#credentials">About &amp; Credentials</a>
+      <a href="#contact">Let's Talk</a>
+    </nav>
+  </header>
 
-  <!-- EDUCATION -->
-  <h3>Education</h3>
-  <div id="education"></div>
+  <main>
+    <!-- 01 — FOREST GREEN ARCHITECTURAL GRID HERO -->
+    <section id="home" class="hero-section">
+      <div class="hero-grid-bg" aria-hidden="true"></div>
 
-  <!-- CERT SUMMARY -->
-  <p id="certification-summary" class="mt-4"></p>
+      <div class="container hero-container">
+        <div class="hero-left">
+          <p class="hero-eyebrow" id="hero-eyebrow">Hi, I'm</p>
+          <h1 class="hero-display" id="hero-display">Pawan</h1>
+          <p class="hero-role" id="hero-role">Full Stack Developer — MERN &amp; Django</p>
+          <p class="hero-tagline" id="hero-tagline">Turning real-world workflows into fast, scalable, and clean web apps.</p>
 
-  <!-- CERTIFICATIONS -->
-  <h3>Certifications</h3>
-  <div id="certifications"></div>
+          <div class="hero-cta-row" id="hero-cta"></div>
+        </div>
 
-</section>
+        <div class="hero-right">
+          <div class="portrait-stage" id="portrait-stage">
+            <div class="portrait-card">
+              <img id="hero-portrait" src="assets/profile.jpeg" alt="Pawan Kumar Sharma portrait" />
+            </div>
 
-<!-- PORTFOLIO -->
-<section id="portfolio" class="container" data-aos="fade-up">
-  <h2>Projects</h2>
-   <p id="projects-summary"></p>
-  <div class="row" id="projects"></div>
+            <aside class="sticky-note" aria-label="Engineering note">
+              <span class="sticky-tape" aria-hidden="true"></span>
+              <span class="sticky-index" id="sticky-index">01 /</span>
+              <p class="sticky-text" id="sticky-text">Think in systems.<br />Ship clean UI.</p>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <h3>Achievements</h3>
-   <p id="achievements-summary"></p>
-  <div class="row" id="achievements"></div>
-</section>
+    <!-- STUDIO PAPER EDITORIAL BODY WITH RIGHT-EDGE RULER TICKS -->
+    <div class="editorial-canvas">
+      <div class="ruler-rail" aria-hidden="true"></div>
 
-<!-- CONTACT -->
-<section id="contact" class="container" data-aos="fade-up">
-  <h2 id="contact-title"></h2>
-  <p id="contact-subtitle"></p>
-  <p id="contact-desc"></p>
+      <!-- 02 — SELECTED WORK -->
+      <section id="work" class="editorial-section">
+        <div class="container">
+          <div class="section-header-row">
+            <div>
+              <p class="section-index">02 — Selected Work</p>
+              <h2 class="section-title">Selected <span class="serif-italic">Work</span></h2>
+              <p class="section-subtitle" id="projects-summary"></p>
+            </div>
 
-  <div class="row">
-    <div class="col-md-6" id="contact-info"></div>
+            <div class="filter-bar" id="project-filters" role="tablist" aria-label="Filter projects by stack">
+              <button type="button" class="filter-btn active" data-filter="All">All</button>
+              <button type="button" class="filter-btn" data-filter="Full Stack">Full Stack</button>
+              <button type="button" class="filter-btn" data-filter="Django">Django</button>
+              <button type="button" class="filter-btn" data-filter="Tools">Tools</button>
+            </div>
+          </div>
 
-    <div class="col-md-6">
-      <iframe id="map-frame" class="w-100 mb-3" height="250"></iframe>
-      <div id="contact-form-box"></div>
+          <div class="projects-grid" id="projects"></div>
+          <div class="featured-wide-slot" id="featured-wide-slot"></div>
+        </div>
+      </section>
+
+      <!-- 03 — EXPERIENCE & TECH STACK -->
+      <section id="experience" class="editorial-section editorial-section--alt">
+        <div class="container">
+          <p class="section-index">03 — Experience &amp; Tech Stack</p>
+          <h2 class="section-title">Experience &amp; <span class="serif-italic">Stack</span></h2>
+
+          <div class="exp-stack-grid">
+            <div class="exp-column">
+              <h3 class="sub-heading">Internships &amp; Work</h3>
+              <div class="exp-list" id="experience-list"></div>
+            </div>
+
+            <div class="stack-column">
+              <h3 class="sub-heading">Core Technologies</h3>
+              <div class="skills-grid" id="skills"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 04 — ABOUT, EDUCATION & CERTIFICATIONS -->
+      <section id="credentials" class="editorial-section">
+        <div class="container">
+          <p class="section-index">04 — About &amp; Credentials</p>
+          <h2 class="section-title">Background &amp; <span class="serif-italic">Credentials</span></h2>
+
+          <div class="about-banner">
+            <div class="about-banner-copy">
+              <p class="about-bio" id="about-text"></p>
+              <div class="about-pills" id="about-highlights"></div>
+            </div>
+            <div class="about-banner-actions">
+              <span class="location-tag" id="about-location"></span>
+              <a href="#contact" class="btn-outline-dark" id="resume-btn">
+                <i class="ri-file-text-line"></i>
+                <span id="resume-btn-label">Resume PDF</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="credentials-split">
+            <div class="cred-col">
+              <h3 class="sub-heading">Education</h3>
+              <div class="cred-list" id="education"></div>
+            </div>
+
+            <div class="cred-col">
+              <h3 class="sub-heading">Certifications</h3>
+              <div class="cred-list" id="certifications"></div>
+
+              <div class="gallery-wrap">
+                <p class="gallery-label">MCA Convocation &amp; Campus Glimpses</p>
+                <div class="edu-slider">
+                  <div class="slider-track" id="slider-track"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05 — LET'S TALK (ENVELOPE CARD + FORM) -->
+      <section id="contact" class="editorial-section editorial-section--alt">
+        <div class="container">
+          <p class="section-index">05 — Let's Talk</p>
+
+          <div class="contact-split">
+            <!-- Blush-pink tactile envelope card -->
+            <div class="envelope-card">
+              <div class="sticker-badge" id="contact-sticker">Open to<br />Work</div>
+
+              <h2 class="envelope-title" id="contact-headline">Got a good idea or role?</h2>
+              <p class="envelope-desc" id="contact-desc"></p>
+
+              <div class="contact-methods" id="contact-info"></div>
+
+              <div class="contact-socials" id="contact-socials"></div>
+            </div>
+
+            <!-- Clean tactile white form card -->
+            <div class="form-card">
+              <h3 class="form-card-title">Send a quick note</h3>
+              <div id="contact-form-box"></div>
+              <div class="form-feedback" id="form-feedback" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- TEXTURED FOREST GREEN FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="footer-name" id="footer-name">Pawan Kumar Sharma</span>
+        <span class="footer-sep" aria-hidden="true">—</span>
+        <span class="footer-role">Full Stack Developer</span>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer Navigation">
+        <a href="#work">Work</a>
+        <a href="#experience">Experience</a>
+        <a href="#credentials">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <button type="button" class="back-top-btn" id="topBtn">Back to Top ↑</button>
+    </div>
+  </footer>
+
+  <!-- PROJECT DETAIL MODAL -->
+  <div class="modal-backdrop" id="project-modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button type="button" class="modal-close" id="modal-close" aria-label="Close modal">
+        <i class="ri-close-line"></i>
+      </button>
+      <div class="modal-thumb-wrap">
+        <img id="modal-img" src="" alt="" />
+      </div>
+      <div class="modal-body">
+        <div class="modal-tags" id="modal-tags"></div>
+        <h3 class="modal-title" id="modal-title"></h3>
+        <p class="modal-desc" id="modal-desc"></p>
+        <div class="modal-actions" id="modal-actions"></div>
+      </div>
     </div>
   </div>
-</section>
 
-</main>
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-pill" id="toast-pill" role="status" aria-live="polite"></div>
 
-<!-- Buttons -->
-<a id="whatsappBtn">
-  <i class="ri-whatsapp-fill"></i>
-</a>
-<button id="topBtn">↑</button>
-
-<!-- Scripts -->
-<script src="script.js"></script>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>

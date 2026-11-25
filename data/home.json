@@ -1,20 +1,25 @@
 {
-  "name": "Hi, I'm Pawan",
-  "roles": ["MERN Developer ", "Full Stack Developer ","django Developer", "Web Developer"],
-  "tagline": "Building Real-world Scalable Web Apps",
-
-  "background": {
-    "type": "image",
-    "value": "assets/hero-bg.jpeg"
+  "eyebrow": "Hi, I'm",
+  "displayName": "Pawan",
+  "fullName": "Pawan Kumar Sharma",
+  "role": "Full Stack Developer — MERN & Django",
+  "roles": [
+    "Full Stack Developer",
+    "MERN Stack Engineer",
+    "Django REST Developer"
+  ],
+  "tagline": "Turning real-world workflows into fast, scalable, and clean web apps.",
+  "stickyNote": {
+    "index": "01 /",
+    "text": "Think in systems.\nShip clean UI."
   },
-
   "cta": [
     {
-      "text": "View Portfolio",
-      "link": "#portfolio"
+      "text": "View Projects",
+      "link": "#work"
     },
     {
-      "text": "Contact Me",
+      "text": "Let's Talk",
       "link": "#contact"
     }
   ]

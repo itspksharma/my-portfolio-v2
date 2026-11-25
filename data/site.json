@@ -1,8 +1,9 @@
 {
-  "title": "Pawan Kumar Sharma | Portfolio",
+  "title": "Pawan Kumar Sharma | Full Stack Developer",
   "name": "Pawan Kumar Sharma",
-  "logo": "assets/profile.jpeg",
-  "theme": "light",
-  "primaryColor": "#2563eb",
-  "secondaryColor": "#9333ea"
+  "shortName": "Pawan",
+  "role": "Full Stack Developer — MERN & Django",
+  "portrait": "assets/profile.jpeg",
+  "availability": "Open to Work",
+  "resumePdf": ""
 }
